@@ -1,5 +1,7 @@
 package com.common.exception;
 
+import org.springframework.http.HttpStatus;
+
 public enum ErrorCode {
     // * 0 ~ 1000, system error
     UNKNOWN(0, HttpStatus.BAD_REQUEST, "系统未知错误"),
@@ -14,11 +16,6 @@ public enum ErrorCode {
     UPLOADFILE_IO_ERROR(10009, HttpStatus.BAD_REQUEST, "文件上传发生IO错误"),
     UPLOADFILE_TYPE_ERROR(10010, HttpStatus.BAD_REQUEST, "文件上传类型错误"),
     DATETIME_ERROR(10011, HttpStatus.BAD_REQUEST, "日期转换错误"),
-    PARSE_CV_ERROR(20001, HttpStatus.BAD_REQUEST, "简历解析错误"),
-    CV_NUMBER_ERROR(20002, HttpStatus.BAD_REQUEST, "简历数量不能超过30份"),
-    CV_REPEAT_ERROR(20003, HttpStatus.BAD_REQUEST, "简历重复"),
-    CV_CONTENT_ERROR(20004,HttpStatus.BAD_REQUEST, "简历内容不全。来源平台、姓名、工作地点、开始工作时间、最高学历、电话或邮箱必须填写"),
-    CV_SHEETS_NUMBER_ERROR(20005, HttpStatus.BAD_REQUEST, "简历数量超过限制"),
 
     USER_NOT_FOUND(30001, HttpStatus.BAD_REQUEST, "未找到用户"),
     USERNAME_OR_PASSWORD_ERROR(30002, HttpStatus.BAD_REQUEST, "用户名密码错误"),

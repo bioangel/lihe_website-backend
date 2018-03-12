@@ -4,6 +4,7 @@ version '1.0-SNAPSHOT'
 project.ext {
     junitVersion = '4.12'
     springBootVersion = '2.0.0.RELEASE'
+    springVersion = '5.0.4.RELEASE'
     assertjVersion = '3.5.2'
     flywayVersion = '3.2.1'
 
