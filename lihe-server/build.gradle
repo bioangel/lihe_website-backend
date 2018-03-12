@@ -4,8 +4,50 @@ dependencies {
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion)
 
     compile(
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion],
             [group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: springBootVersion]
 
 
+
     )
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath group: 'org.flywaydb', name: 'flyway-gradle-plugin', version: flywayVersion
+    }
+}
+
+ext {
+    Properties properties = new Properties();
+    properties.load(new FileInputStream(file("$environmentPah/application-database.properties")))
+    if (properties.getProperty("datasource.otherDs") == 'true') {
+        dbPort = properties.getProperty("datasource.others.port")
+    } else {
+        dbPort = properties.getProperty("datasource.master.port")
+    }
+    flywayPort = System.getProperty('port', dbPort)
+}
+
+apply plugin: 'org.flywaydb.flyway'
+
+flyway {
+    url = "jdbc:mysql://localhost:$flywayPort/lihe?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true"
+    baselineOnMigrate = true
+    user = "root"
+    password = "root"
+    baselineVersion = 0
+    outOfOrder = true
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs = ["src/main/resources", environmentPah]
+        }
+    }
 }
