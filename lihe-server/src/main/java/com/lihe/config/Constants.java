@@ -9,4 +9,5 @@ public class Constants {
     public static final String CFG_FILE_CACHE = "classpath:/application-cache.properties";
     public static final String CFG_FILE_CAPTCHA = "classpath:/application-captcha.properties";
     public static final String CFG_FILE_MYBATIS = "classpath:/application-mybatis.properties";
+    public static final String CFG_FILE_ACCESS = "classpath:/application-access.properties";
 }
