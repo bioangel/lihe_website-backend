@@ -1,0 +1,11 @@
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: junitVersion
+    testCompile(group: 'org.assertj', name: 'assertj-core', version: assertjVersion)
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion)
+
+    compile(
+            [group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: springBootVersion]
+
+
+    )
+}

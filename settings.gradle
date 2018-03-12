@@ -1,0 +1,6 @@
+rootProject.name = 'lihe_website-backend'
+include 'common'
+include 'security'
+include 'database'
+include 'lihe-server'
+

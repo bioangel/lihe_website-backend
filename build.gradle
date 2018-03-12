@@ -1,0 +1,78 @@
+group 'lihe_website-backend'
+version '1.0-SNAPSHOT'
+
+project.ext {
+    junitVersion = '4.12'
+    springBootVersion = '2.0.0.RELEASE'
+    assertjVersion = '3.5.2'
+    flywayVersion = '3.2.1'
+
+
+    env = System.getProperty('env', 'local')
+}
+
+buildscript {
+    repositories {
+        mavenLocal()
+        maven{url 'http://maven.aliyun.com/nexus/content/groups/public'}
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE")
+    }
+}
+
+ext {
+    skipPackage = System.getProperty('skip', 'no')
+    testPackage = System.getProperty('retain', 'no')
+    environmentPah = "envs/$env"
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        maven{url 'http://maven.aliyun.com/nexus/content/groups/public'}
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'maven'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    apply plugin: 'checkstyle'
+    apply plugin: 'jacoco'
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+        options.encoding = 'UTF-8'
+    }
+
+    checkstyle {
+        toolVersion = "6.7"
+        configFile = new File(project(":").projectDir, "checkstyle.xml")
+    }
+
+}
+
+subprojects {
+    repositories {
+        mavenLocal()
+        maven{url 'http://maven.aliyun.com/nexus/content/groups/public'}
+    }
+}
+
+idea {
+    project {
+        languageLevel = '1.8'
+        jdkName = '1.8'
+
+        ipr {
+            withXml { provider ->
+                provider.node.component
+                        .find { it.@name == 'VcsDirectoryMappings' }
+                        .mapping.@vcs = 'Git'
+            }
+        }
+    }
+}
+
