@@ -1,4 +1,4 @@
-package com.lihe.config;
+package com.zhp.lihe.config;
 
 
 import org.springframework.context.annotation.ComponentScan;
@@ -20,7 +20,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
         @PropertySource(value = Constants.CFG_FILE_ACCESS),
         @PropertySource(value = Constants.CFG_FILE_SECURITY)
 })
-@ComponentScan({"com"})
+@ComponentScan({"com.zhp"})
 @EnableAsync
 public class EnvConfig {
 }

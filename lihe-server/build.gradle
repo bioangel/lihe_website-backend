@@ -2,15 +2,16 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: junitVersion
     testCompile(group: 'org.assertj', name: 'assertj-core', version: assertjVersion)
     testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion)
+    testCompile(group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion)
 
     compile(
             [group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion],
             [group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: springBootVersion],
 
 
-
     )
     compile project(':common')
+    compile project(':database')
 }
 
 buildscript {

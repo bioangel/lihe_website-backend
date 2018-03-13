@@ -1,6 +1,6 @@
-package com.lihe.server;
+package com.zhp.lihe.server;
 
-import com.lihe.config.EnvConfig;
+import com.zhp.lihe.config.EnvConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;

@@ -1,4 +1,4 @@
-package com.lihe.config;
+package com.zhp.lihe.config;
 
 /**
  * Created by zhouhh2 on 2018/3/12.
