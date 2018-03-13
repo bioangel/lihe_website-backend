@@ -26,7 +26,7 @@ import java.util.Optional;
 @ConditionalOnProperty(name = Constants.flag_multipleDs, havingValue = "true")
 public class DynamicDataSourceMethodAspect {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final String aspectStr = "execution(* com.lenovo..dbservice.*Service.*(..))";
+    private final String aspectStr = "execution(* com.zhp..dbservice.*Service.*(..))";
 
     @Autowired
     private DataSourceConfigRegister dataSourceConfigRegister;

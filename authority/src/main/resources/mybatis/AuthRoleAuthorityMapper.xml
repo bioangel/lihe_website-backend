@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhp.authority.dao.AuthRoleAuthorityMapper" >
+  <resultMap id="BaseResultMap" type="com.zhp.authority.model.AuthRoleAuthority" >
+    <result column="roleId" property="roleid" jdbcType="INTEGER" />
+    <result column="authorityId" property="authorityid" jdbcType="INTEGER" />
+  </resultMap>
+
+  <resultMap id="UidApiMap" type="com.zhp.common.model.CommonKvDTO" >
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="str_value" property="strValue" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="selectUidApi" resultMap="UidApiMap">
+    select a.uuid name ,d.api str_value
+    FROM auth_account a, auth_role role,auth_role_account b,
+        auth_role_authority c, auth_authority_api d,
+        auth_authority authy
+    where a.uuid = b.account_uuid
+      and role.id = b.role_id
+      and authy.id = c.authorityId
+      and b.role_id = c.roleId
+      and c.authorityId = d.authority_id
+      and role.`enable` = 1
+      and a.`enable` = 1
+      and authy.`enable` = 1
+      GROUP BY a.uuid,d.api
+  </select>
+
+  <insert id="insert" parameterType="com.zhp.authority.model.AuthRoleAuthority" >
+    insert into auth_role_authority (roleId, authorityId)
+    values (#{roleid,jdbcType=INTEGER}, #{authorityid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhp.authority.model.AuthRoleAuthority" >
+    insert into auth_role_authority
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleid != null" >
+        roleId,
+      </if>
+      <if test="authorityid != null" >
+        authorityId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleid != null" >
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="authorityid != null" >
+        #{authorityid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

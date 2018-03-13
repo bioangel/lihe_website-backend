@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhp.authority.dao.AuthOrganizationMapper">
+    <resultMap id="BaseResultMap" type="com.zhp.authority.model.AuthOrganization">
+        <id column="id" property="id" jdbcType="INTEGER"/>
+        <result column="version" property="version" jdbcType="INTEGER"/>
+        <result column="enable" property="enable" jdbcType="BIT"/>
+        <result column="name" property="name" jdbcType="VARCHAR"/>
+        <result column="levelCode" property="levelcode" jdbcType="VARCHAR"/>
+        <result column="position" property="position" jdbcType="INTEGER"/>
+        <result column="theValue" property="thevalue" jdbcType="VARCHAR"/>
+        <result column="parentId" property="parentid" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+    id, version, enable, name, levelCode, position, theValue, parentId
+    </sql>
+
+    <select id="selectAuthOrganizationById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List"/>
+        from auth_organization
+        where id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectAuthOrganizationList" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from auth_organization
+        where enable = 1
+    </select>
+
+    <update id="deleteAuthOrganizationById" parameterType="java.lang.Integer">
+    UPDATE auth_organization SET enable = 0
+    where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <insert id="insertAuthOrganization" parameterType="com.zhp.authority.model.AuthOrganization">
+    insert into auth_organization (version, enable,
+      name, levelCode, position,
+      theValue, parentId)
+    values (#{version,jdbcType=INTEGER}, #{enable,jdbcType=BIT},
+      #{name,jdbcType=VARCHAR}, #{levelcode,jdbcType=VARCHAR}, #{position,jdbcType=INTEGER},
+      #{thevalue,jdbcType=VARCHAR}, #{parentid,jdbcType=INTEGER})
+    </insert>
+
+    <update id="updateAuthOrganization" parameterType="com.zhp.authority.model.AuthOrganization">
+    update auth_organization
+    set version = #{version,jdbcType=INTEGER},
+      enable = #{enable,jdbcType=BIT},
+      name = #{name,jdbcType=VARCHAR},
+      levelCode = #{levelcode,jdbcType=VARCHAR},
+      position = #{position,jdbcType=INTEGER},
+      theValue = #{thevalue,jdbcType=VARCHAR},
+      parentId = #{parentid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

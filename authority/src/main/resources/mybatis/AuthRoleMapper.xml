@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhp.authority.dao.AuthRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.zhp.authority.model.AuthRole" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="enable" property="enable" jdbcType="BIT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, version, name, enable
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from auth_role
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <select id="selectAll" resultType="com.zhp.authority.model.AuthRole" >
+    select
+    <include refid="Base_Column_List" />
+    from auth_role
+  </select>
+
+  <select id="selectAllWithEnable" resultType="com.zhp.authority.model.AuthRole" >
+    select
+    <include refid="Base_Column_List" />
+    from auth_role WHERE enable = 1
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from auth_role
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zhp.authority.model.AuthRole" >
+    insert into auth_role (id, version, name, 
+      enable)
+    values (#{id,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+      #{enable,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhp.authority.model.AuthRole" >
+    insert into auth_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="enable != null" >
+        enable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null" >
+        #{enable,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective"
+          parameterType="com.zhp.authority.model.AuthRole" >
+    update auth_role
+    <set >
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="enable != null" >
+        enable = #{enable,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhp.authority.model.AuthRole" >
+    update auth_role
+    set version = #{version,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      enable = #{enable,jdbcType=BIT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="deleteAccountRole" parameterType="java.lang.String">
+    delete FROM auth_role_account
+    where account_uuid = #{uuid,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="batchSaveAccountRole"
+          parameterType="com.zhp.authority.dto.RoleAccountSaveDTO">
+    insert into auth_role_account
+      (uuid, account_uuid, role_id)
+    SELECT  tmp.* from (
+      <foreach collection="roleList" item="item" index="index" separator="union all">
+        SELECT
+          replace(uuid(),'-',''),#{uuid,jdbcType=VARCHAR}, #{item}
+        FROM DUAL
+      </foreach>
+    ) tmp
+  </insert>
+
+  <insert id="insertRoleAuth">
+    insert into auth_role_authority (roleId,authorityId)
+    select #{rid,jdbcType=VARCHAR},auth.* from (
+      <foreach collection="menuList" item="item" index="index" separator="union all">
+        SELECT  #{item}  FROM DUAL
+      </foreach>
+    ) auth
+  </insert>
+
+  <delete id="deleteRoleAuthById">
+    delete from auth_role_authority where roleId=#{rid,jdbcType=VARCHAR}
+  </delete>
+
+  <delete id="deleteRoleAccountById">
+    delete from auth_role_account
+    where role_id in
+    <foreach collection="ridList" item="item" index="index" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </delete>
+  <delete id="deleteRoleDataById">
+    delete from auth_role_data
+    where roleId in
+    <foreach collection="ridList" item="item" index="index" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </delete>
+  <delete id="deleteRoleAuthByIdList">
+    delete from auth_role_authority
+    where roleId in
+    <foreach collection="ridList" item="item" index="index" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </delete>
+  <delete id="deleteRoleById">
+    delete from auth_role
+    where id in
+    <foreach collection="ridList" item="item" index="index" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </delete>
+</mapper>

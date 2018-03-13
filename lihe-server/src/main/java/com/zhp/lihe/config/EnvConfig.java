@@ -17,6 +17,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
         @PropertySource({Constants.CFG_FILE_MYBATIS}),
 //        @PropertySource(value = Constants.CFG_FILE_CACHE, ignoreResourceNotFound = true),
         @PropertySource(value = Constants.CFG_FILE_CAPTCHA),
+        @PropertySource(value = Constants.CFG_FILE_CACHE),
         @PropertySource(value = Constants.CFG_FILE_ACCESS),
         @PropertySource(value = Constants.CFG_FILE_SECURITY)
 })

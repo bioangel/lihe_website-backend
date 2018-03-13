@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhp.authority.dao.AuthAuthorityMapper" >
+  <resultMap id="BaseResultMap" type="com.zhp.authority.model.AuthAuthority" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="enable" property="enable" jdbcType="BIT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="levelCode" property="levelcode" jdbcType="VARCHAR" />
+    <result column="position" property="position" jdbcType="INTEGER" />
+    <result column="theValue" property="thevalue" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="matchUrl" property="matchurl" jdbcType="VARCHAR" />
+    <result column="itemIcon" property="itemicon" jdbcType="VARCHAR" />
+    <result column="parentId" property="parentid" jdbcType="VARCHAR" />
+    <result column="m_id" property="mid" jdbcType="VARCHAR"/>
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, version, enable, name, levelCode, position, theValue, url, matchUrl, itemIcon, 
+    parentId
+  </sql>
+
+  <resultMap id="BaseMenu" type="com.zhp.authority.model.Menu" >
+    <result column="name" property="title"/>
+    <result column="itemIcon" property="fa"/>
+    <result column="m_id" property="id"/>
+    <result column="url" property="targetId"/>
+    <result column="theValue" property="hasSub"/>
+    <result column="matchUrl" property="temp"/>
+  </resultMap>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from auth_authority
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from auth_authority
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select * from auth_authority
+  </select>
+
+  <insert id="insert" parameterType="com.zhp.authority.model.AuthAuthority" >
+    insert into auth_authority (id, version, enable, 
+      name, levelCode, position, 
+      theValue, url, matchUrl, 
+      itemIcon, parentId, m_id)
+    values (#{id,jdbcType=VARCHAR}, #{version,jdbcType=INTEGER}, #{enable,jdbcType=BIT},
+      #{name,jdbcType=VARCHAR}, #{levelcode,jdbcType=VARCHAR}, #{position,jdbcType=INTEGER}, 
+      #{thevalue,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{matchurl,jdbcType=VARCHAR}, 
+      #{itemicon,jdbcType=VARCHAR}, #{parentid,jdbcType=VARCHAR},#{mid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhp.authority.model.AuthAuthority" >
+    insert into auth_authority
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="enable != null" >
+        enable,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="levelcode != null" >
+        levelCode,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="thevalue != null" >
+        theValue,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="matchurl != null" >
+        matchUrl,
+      </if>
+      <if test="itemicon != null" >
+        itemIcon,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="mid != null" >
+        m_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="enable != null" >
+        #{enable,jdbcType=BIT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="levelcode != null" >
+        #{levelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=INTEGER},
+      </if>
+      <if test="thevalue != null" >
+        #{thevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="matchurl != null" >
+        #{matchurl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemicon != null" >
+        #{itemicon,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        #{mid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhp.authority.model.AuthAuthority" >
+    update auth_authority
+    <set >
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="enable != null" >
+        enable = #{enable,jdbcType=BIT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="levelcode != null" >
+        levelCode = #{levelcode,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null" >
+        position = #{position,jdbcType=INTEGER},
+      </if>
+      <if test="thevalue != null" >
+        theValue = #{thevalue,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="matchurl != null" >
+        matchUrl = #{matchurl,jdbcType=VARCHAR},
+      </if>
+      <if test="itemicon != null" >
+        itemIcon = #{itemicon,jdbcType=VARCHAR},
+      </if>
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=VARCHAR},
+      </if>
+      <if test="mid != null" >
+        m_id = #{mid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhp.authority.model.AuthAuthority" >
+    update auth_authority
+    set version = #{version,jdbcType=INTEGER},
+      enable = #{enable,jdbcType=BIT},
+      name = #{name,jdbcType=VARCHAR},
+      levelCode = #{levelcode,jdbcType=VARCHAR},
+      position = #{position,jdbcType=INTEGER},
+      theValue = #{thevalue,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      matchUrl = #{matchurl,jdbcType=VARCHAR},
+      itemIcon = #{itemicon,jdbcType=VARCHAR},
+      parentId = #{parentid,jdbcType=VARCHAR},
+      m_id = #{mid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="findMenuAll" resultMap="BaseResultMap">
+   select * from auth_authority
+  </select>
+  
+  <select id="findMenuByRoleId" resultMap="BaseResultMap">
+   SELECT DISTINCT b.id,b.version,b.`enable`,b.`name`,b.levelCode,b.position,
+    b.theValue,b.url,b.matchUrl,b.itemIcon,b.parentId,b.m_id
+   from auth_role_authority as a,auth_authority as b
+   where a.roleId in
+    <foreach collection="roleId" item="item" index="index" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+   and a.authorityId = b.id
+   order by position,levelCode
+  </select>
+
+  <select id="findAuthTree" resultType="com.zhp.authority.dto.AuthAuthorityDTO"
+          parameterType="java.lang.String">
+    call proc_show_childLst(#{id,jdbcType=VARCHAR})
+  </select>
+
+  <select id="selectAuthByRoleId" resultType="java.lang.String">
+    select authorityId from auth_role_authority where roleId=#{rid,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findAllAuth" resultType="com.zhp.authority.dto.AuthAuthorityDTO">
+    select * from auth_authority where `enable`=1
+  </select>
+  
+  <delete id="deleteAuth">
+    delete from auth_authority
+    where id in
+    <foreach collection="aidList" item="item" index="index" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </delete>
+  <delete id="deleteAuthWithRole">
+    delete from auth_role_authority
+    where authorityId in
+    <foreach collection="aidList" item="item" index="index" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </delete>
+</mapper>

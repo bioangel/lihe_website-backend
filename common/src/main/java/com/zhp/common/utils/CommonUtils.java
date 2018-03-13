@@ -59,4 +59,8 @@ public class CommonUtils {
         Matcher matcher = pattern.matcher(str);
         return matcher.replaceAll("").trim();
     }
+
+    public static String getUUID() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
 }
