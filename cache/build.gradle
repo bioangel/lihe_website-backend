@@ -1,0 +1,17 @@
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: junitVersion
+    testCompile(group: 'org.assertj', name: 'assertj-core', version: assertjVersion)
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springBootVersion)
+
+    compile (
+            [group: 'org.springframework.data', name: 'spring-data-redis', version: springDataRedisVersion],
+
+            [group: 'net.spy', name: 'spymemcached', version: '2.12.1'],
+
+            [group: 'redis.clients', name: 'jedis', version: '2.9.0'],
+            [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion],
+//            [group: 'com.google.guava', name: 'guava', version: '12.0.1']
+    )
+
+    compile project(':common')
+}

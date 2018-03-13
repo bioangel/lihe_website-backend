@@ -1,0 +1,6 @@
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile(group: 'com.github.axet', name: 'kaptcha', version: '0.0.9')
+    compile project(':cache')
+}
