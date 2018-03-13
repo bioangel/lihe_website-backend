@@ -21,7 +21,7 @@ import java.util.Map;
  * Created by zhouhh2 on 2016/6/27.
  */
 @RestController
-@RequestMapping(value = "/com/zhp/authority")
+@RequestMapping(value = "/authority")
 public class AuthorityController {
     private final Logger logger = LoggerFactory.getLogger(getClass());
 

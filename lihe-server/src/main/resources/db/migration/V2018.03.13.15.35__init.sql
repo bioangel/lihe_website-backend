@@ -136,7 +136,7 @@ VALUES ('1', 'a40f27d3609811e78810fa163ef7fc74', '/authority');
 INSERT INTO `auth_authority_api` (`id`, `authority_id`, `api`)
 VALUES ('2', 'ec0bf17a609811e78810fa163ef7fc74', '/account');
 INSERT INTO `auth_authority_api` (`id`, `authority_id`, `api`)
-VALUES ('3', 'ec0bf17a609811e78810fa163ef7fc74', '/org/getList');
+VALUES ('3', 'ec0bf17a609811e78810fa163ef7fc74', '/org');
 INSERT INTO `auth_authority_api` (`id`, `authority_id`, `api`)
 VALUES ('4', 'f6653cdb609811e78810fa163ef7fc74', '/role');
 INSERT INTO `auth_authority_api` (`id`, `authority_id`, `api`)

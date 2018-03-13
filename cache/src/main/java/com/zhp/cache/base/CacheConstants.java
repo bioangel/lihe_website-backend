@@ -4,7 +4,7 @@ package com.zhp.cache.base;
  * Created by zhouhh2 on 2016/12/20.
  */
 public class CacheConstants {
-    public static final String CACHE_PREFIX = "com/zhp/cache";
+    public static final String CACHE_PREFIX = "cache";
     public static final String CACHE_ENABLED = "cache.enabled";
     public static final String CACHE_NAME = "cache.name";
     public static final String CACHE_MEMCACHE = "memcached";
