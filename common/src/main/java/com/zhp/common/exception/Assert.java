@@ -1,4 +1,4 @@
-package com.common.exception;
+package com.zhp.common.exception;
 
 public abstract class Assert {
 
