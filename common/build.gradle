@@ -1,9 +1,7 @@
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile(
-            [group: 'org.springframework', name: 'spring-web', version: springVersion]
+    testCompile group: 'junit', name: 'junit', version: junitVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter', version: springBootVersion
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion
 
-
-
-    )
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: apacheCommonLang3Version
 }

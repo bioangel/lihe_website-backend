@@ -3,12 +3,23 @@ version '1.0-SNAPSHOT'
 
 project.ext {
     junitVersion = '4.12'
-    springBootVersion = '2.0.0.RELEASE'
-    springVersion = '5.0.4.RELEASE'
+    springBootVersion = '1.5.10.RELEASE'
+    springVersion = '4.3.14.RELEASE'
     assertjVersion = '3.5.2'
     flywayVersion = '3.2.1'
     mybatisVersion = '3.4.5'
+    mybatisSpringVersion = '1.3.1'
+
+    tomcatJdbcPoolVersion = '8.5.8'
+    mariaVersion = '2.1.2'
+
     logbackVersion = '1.2.3'
+    aspectjVersiion = '1.8.13'
+    slf4jVersion = '1.7.25'
+    flywayVersion = '4.2.0'
+
+    apacheCommonLang3Version = '3.7'
+
 
     env = System.getProperty('env', 'local')
 }

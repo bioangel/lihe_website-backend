@@ -1,7 +1,23 @@
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-    compile{
-        [group: 'org.mybatis', name: 'mybatis', version: mybatisVersion]
-    }
+    compile(
+        [group: 'org.mybatis', name: 'mybatis', version: mybatisVersion],
+        [group: 'org.mybatis', name: 'mybatis-spring', version: mybatisSpringVersion],
+        [group: 'org.aspectj', name: 'aspectjweaver', version: aspectjVersiion],
+
+        [group: 'org.springframework', name: 'spring-tx', version: springVersion],
+        [group: 'org.springframework', name: 'spring-jdbc', version: springVersion],
+
+        [group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion],
+
+        [group: 'org.apache.tomcat', name: 'tomcat-jdbc', version: tomcatJdbcPoolVersion],
+        //[group: 'mysql', name: 'mysql-connector-java', version: mysqlConnectorVersion],
+        [group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: mariaVersion],
+        [group: 'org.flywaydb', name: 'flyway-core', version: flywayVersion],
+
+
+    )
+    compile project(':common')
+    compile project(':security')
 }
