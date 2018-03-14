@@ -113,7 +113,7 @@ public class AuthorityService {
         } else {
             data.setLevelcode("2");
         }
-        data.setId(CommonUtils.getUUID());
+        data.setId(CommonUtils.getUuid());
         return authorityDao.insertSelective(data);
     }
 

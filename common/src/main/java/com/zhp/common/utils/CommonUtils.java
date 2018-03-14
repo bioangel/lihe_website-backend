@@ -60,7 +60,7 @@ public class CommonUtils {
         return matcher.replaceAll("").trim();
     }
 
-    public static String getUUID() {
+    public static String getUuid() {
         return UUID.randomUUID().toString().replace("-", "");
     }
 }

@@ -47,7 +47,7 @@ public class RoleService {
     }
 
     public int saveRoleAuth(RoleAuthSaveDTO record) {
-        String rid = CommonUtils.getUUID();
+        String rid = CommonUtils.getUuid();
         roleDao.insertRoleAuth(rid, record.getMenuList());
         return roleDao.insertSelective(new AuthRole(rid, 0, record.getName(), record.getEnable()));
     }

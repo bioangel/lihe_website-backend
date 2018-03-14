@@ -73,7 +73,7 @@ public class AccountController {
         }
         int time = account.getTime() == 0 || account.getTime() > CacheConstants.EXPIRE_TIME
                 ? CacheConstants.EXPIRE_TIME : account.getTime();
-        String token = CommonUtils.getUUID();
+        String token = CommonUtils.getUuid();
         mcService.save(token, new LoginVO(result.get(0).getUuid(), time), time);
         return ResponseEntity.ok().body(ImmutableMap.of(HttpHeader.TOKEN, token,
                 "menu", authorityService.findLeftMenu(roleIdList),
@@ -82,9 +82,6 @@ public class AccountController {
 
     private void checkCaptcha(UserLoginDTO account) {
         if (captchaSwitchConfig == null || !captchaSwitchConfig.isEnabled()) {
-            return;
-        }
-        if ("lizy31".equalsIgnoreCase(account.getUsername())) {
             return;
         }
         if (account != null) {
@@ -105,7 +102,7 @@ public class AccountController {
         account.setPassword(Md5Util.md5Encode(account.getPassword()));
         account.setEnable(true);
         account.setRegistertime(new Date());
-        account.setUuid(CommonUtils.getUUID());
+        account.setUuid(CommonUtils.getUuid());
         account.setVersion(0);
         if (accountService.save(account) > 0) {
             return ResponseEntity.ok().build();

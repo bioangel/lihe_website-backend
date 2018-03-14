@@ -54,3 +54,46 @@
         "menu": [],
         "uid": ""
     }
+    
+## /account/save
+* 保存账户信息
+* POST
+* header: token
+* 参数
+    {"username":"xxx","password":"Abcd123456","email":"aa@a.com"}
+* 返回数据
+    HTTP Status
+    
+## /account/test
+* 测试接口，不需要token
+* GET
+* 返回数据
+    {"message": "ok"}
+    
+## /account/delete
+* 删除账户
+* POST
+* header: token
+* 参数
+    {"uid":["1111","2222"]}
+* 返回数据
+    HTTP Status
+    
+## /account/userList
+* 获取用户列表，但不包括用户名是admin的用户
+* GET
+* header: token
+* 返回数据
+    {
+        "uid": "username",
+        "uid": "username"
+    }
+    
+## /account/role/save
+* 保存用户和角色的关系
+* POST
+* header: token
+* 参数
+    {"uuid":"uuid","roleList":["roleId1","roleId2"]}
+* 返回数据
+    HTTP Status
