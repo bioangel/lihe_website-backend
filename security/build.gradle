@@ -1,5 +1,8 @@
 dependencies {
     testCompile group: 'junit', name: 'junit', version: junitVersion
+    testCompile group: 'org.springframework', name: 'spring-test', version: springVersion
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-test', version: springBootVersion
+
     compile(
             [group: 'org.springframework', name: 'spring-context', version: springVersion],
             [group: 'org.springframework.boot', name: 'spring-boot', version: springBootVersion],

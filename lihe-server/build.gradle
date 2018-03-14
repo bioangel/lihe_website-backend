@@ -5,8 +5,6 @@ dependencies {
     testCompile(group: 'ch.qos.logback', name: 'logback-classic', version: logbackVersion)
 
 //    compile (
-//            [group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springBootVersion],
-//            [group: 'org.springframework.boot', name: 'spring-boot-starter-aop', version: springBootVersion],
 
 //    )
 
