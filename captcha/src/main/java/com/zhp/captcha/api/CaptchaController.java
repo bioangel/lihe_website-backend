@@ -25,7 +25,7 @@ public class CaptchaController {
     @Autowired
     private ExternalCache externalCache;
 
-    @RequestMapping(method = {RequestMethod.GET}, value = "captcha")
+    @RequestMapping(method = {RequestMethod.GET}, value = "/captcha")
     public Map captcha() throws ServletException, IOException {
         String authToken = CommonUtils.getuuid();
         CaptchaDTO captchaDTO = captchaService.getCaptcha();
