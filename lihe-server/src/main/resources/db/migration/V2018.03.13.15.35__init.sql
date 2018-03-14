@@ -142,6 +142,8 @@ VALUES ('4', 'f6653cdb609811e78810fa163ef7fc74', '/role');
 INSERT INTO `auth_authority_api` (`id`, `authority_id`, `api`)
 VALUES ('5', 'f6653cdb609811e78810fa163ef7fc74', '/authority');
 
+INSERT INTO `smarthr`.`auth_role_authority` (`roleId`, `authorityId`)
+VALUES ('70ff5fe5609211e78810fa163ef7fc74', '786b0563609811e78810fa163ef7fc74');
 INSERT INTO `auth_role_authority` (`roleId`, `authorityId`)
 VALUES ('70ff5fe5609211e78810fa163ef7fc74', 'a40f27d3609811e78810fa163ef7fc74');
 INSERT INTO `auth_role_authority` (`roleId`, `authorityId`)
