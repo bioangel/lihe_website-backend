@@ -252,3 +252,115 @@ allAuthorList的内容同/authority/get返回中的“menuList”字段
 }
 ```
 
+## /authority/save
+* 权限保存
+* POST
+* header: token
+* 参数
+```
+{"version":0,"parentid":"{parentid}","name":"{authName}","position":0,
+"url":"0","matchurl":"xxxx","mid":""}
+```
+* 返回数据
+    HTTP Status
+
+## /authority/update
+* 更新一条权限数据
+* POST
+* header: token
+* 参数
+```
+{
+    "id": "f6653cdb609811e78810fa163ef7fc74",
+    "version": 0,
+    "enable": true,
+    "name": "角色管理",
+    "levelcode": "2",
+    "position": 12,
+    "thevalue": "false",
+    "url": "0",
+    "matchurl": "user/role",
+    "itemicon": "fa-building-o",
+    "parentid": "786b0563609811e78810fa163ef7fc74",
+    "mid": "role_setting"
+}
+```
+* 返回数据
+    HTTP Status
+
+## /authority/delete
+* 根据id删除一个或多个权限
+* POST
+* header: token
+* 参数
+```
+{"aid":["authId","authId"]}
+```
+* 返回数据
+    HTTP Status
+
+## /authority/all
+* 获取所有权限,无树形结构
+* GET
+* header: token
+* 返回数据
+```
+[
+    {
+        "id": "786b0563609811e78810fa163ef7fc74",
+        "version": 0,
+        "enable": true,
+        "name": "用户权限",
+        "levelcode": "1",
+        "position": 10,
+        "thevalue": "true",
+        "url": "0",
+        "matchurl": "user/",
+        "itemicon": "fa-users",
+        "parentid": "0",
+        "mid": "user_unuse"
+    },
+    {
+        "id": "a40f27d3609811e78810fa163ef7fc74",
+        "version": 0,
+        "enable": true,
+        "name": "权限管理",
+        "levelcode": "2",
+        "position": 13,
+        "thevalue": "false",
+        "url": "0",
+        "matchurl": "user/authority",
+        "itemicon": "fa-keyboard-o",
+        "parentid": "786b0563609811e78810fa163ef7fc74",
+        "mid": "auth_setting"
+    },
+    {
+        "id": "ec0bf17a609811e78810fa163ef7fc74",
+        "version": 0,
+        "enable": true,
+        "name": "用户管理",
+        "levelcode": "2",
+        "position": 11,
+        "thevalue": "false",
+        "url": "0",
+        "matchurl": "user/user",
+        "itemicon": "fa-user",
+        "parentid": "786b0563609811e78810fa163ef7fc74",
+        "mid": "user_setting"
+    },
+    {
+        "id": "f6653cdb609811e78810fa163ef7fc74",
+        "version": 0,
+        "enable": true,
+        "name": "角色管理",
+        "levelcode": "2",
+        "position": 12,
+        "thevalue": "false",
+        "url": "0",
+        "matchurl": "user/role",
+        "itemicon": "fa-building-o",
+        "parentid": "786b0563609811e78810fa163ef7fc74",
+        "mid": "role_setting"
+    }
+]
+```
