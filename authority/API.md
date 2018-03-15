@@ -159,3 +159,96 @@
 ```
 {"rid":["roleId","roleId"]}
 ```
+* 返回数据
+    HTTP Status
+
+## /authority/get
+* 获取完整的权限功能树
+* GET
+* header: token
+* 返回数据
+```
+[
+    {
+        "id": "786b0563609811e78810fa163ef7fc74",
+        "version": 0,
+        "enable": true,
+        "name": "用户权限",
+        "levelcode": "1",
+        "position": 10,
+        "thevalue": "true",
+        "url": "0",
+        "matchurl": "user/",
+        "itemicon": "fa-users",
+        "parentid": "0",
+        "mid": null,
+        "menuList": [
+            {
+                "id": "a40f27d3609811e78810fa163ef7fc74",
+                "version": 0,
+                "enable": true,
+                "name": "权限管理",
+                "levelcode": "2",
+                "position": 13,
+                "thevalue": "false",
+                "url": "0",
+                "matchurl": "user/authority",
+                "itemicon": "fa-keyboard-o",
+                "parentid": "786b0563609811e78810fa163ef7fc74",
+                "mid": null,
+                "menuList": null
+            },
+            {
+                "id": "ec0bf17a609811e78810fa163ef7fc74",
+                "version": 0,
+                "enable": true,
+                "name": "用户管理",
+                "levelcode": "2",
+                "position": 11,
+                "thevalue": "false",
+                "url": "0",
+                "matchurl": "user/user",
+                "itemicon": "fa-user",
+                "parentid": "786b0563609811e78810fa163ef7fc74",
+                "mid": null,
+                "menuList": null
+            },
+            {
+                "id": "f6653cdb609811e78810fa163ef7fc74",
+                "version": 0,
+                "enable": true,
+                "name": "角色管理",
+                "levelcode": "2",
+                "position": 12,
+                "thevalue": "false",
+                "url": "0",
+                "matchurl": "user/role",
+                "itemicon": "fa-building-o",
+                "parentid": "786b0563609811e78810fa163ef7fc74",
+                "mid": null,
+                "menuList": null
+            }
+        ]
+    }
+]
+```
+
+## /authority/{roleId}
+* 根据roleId获取权限列表
+* GET
+* header: token
+* 返回数据
+allAuthorList的内容同/authority/get返回中的“menuList”字段
+```
+{
+    "authorList": [
+        "a40f27d3609811e78810fa163ef7fc74",
+        "ec0bf17a609811e78810fa163ef7fc74",
+        "f6653cdb609811e78810fa163ef7fc74",
+        "786b0563609811e78810fa163ef7fc74"
+    ],
+    "rid": "70ff5fe5609211e78810fa163ef7fc74",
+    "allAuthorList":[],
+}
+```
+
