@@ -1,4 +1,4 @@
-# captcha 模块
+# captcha 模块API
 ## /captcha
 * 获取验证码
 * GET
