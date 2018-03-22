@@ -18,7 +18,7 @@ gradle  flywayMigrate -Dport=3307
 gradle  flywayMigrate
 ```
 
-## 代码检查
+## 代码质量检查
 ```
 gradle check
 ```

@@ -6,4 +6,5 @@ include 'lihe-server'
 include 'captcha'
 include 'cache'
 include 'authority'
+include 'sys'
 

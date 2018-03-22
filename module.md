@@ -26,3 +26,7 @@
 ## 7.lihe-server
 * lihe 应用服务器，包含server系统功能的代码
 * 依赖authority模块
+
+## 8.sys
+* 系统底层通用模块
+* 依赖database模块
