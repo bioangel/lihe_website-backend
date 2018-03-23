@@ -1,13 +1,13 @@
 package com.zhp.authority.interceptor;
 
-import com.zhp.authority.base.HttpHeader;
-import com.zhp.authority.dbservice.AuthorityService;
-import com.zhp.authority.model.LoginVO;
 import com.zhp.cache.base.CacheConstants;
 import com.zhp.cache.base.CacheOperation;
+import com.zhp.sys.base.AccessConstants;
+import com.zhp.authority.dbservice.AuthorityService;
 import com.zhp.common.exception.BadRequestException;
 import com.zhp.common.exception.ErrorCode;
 import com.zhp.security.utils.SecurityUtils;
+import com.zhp.sys.model.LoginVO;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,9 +46,6 @@ public class AuthorityInterceptor extends WebMvcConfigurerAdapter {
                 .addPathPatterns("/**")
                 .excludePathPatterns("/account/login",
                                      "/error/**",
-                                     "/file/download/**",
-                                     "/file/upload/tupu",
-                                     "/uploadfiles/**",
                                      "/captcha");
         super.addInterceptors(registry);
     }
@@ -65,7 +62,7 @@ public class AuthorityInterceptor extends WebMvcConfigurerAdapter {
                 if (!securityUtils.isAuthority()) {
                     return true;
                 }
-                String token = request.getHeader(HttpHeader.TOKEN);
+                String token = request.getHeader(AccessConstants.TOKEN);
                 logger.debug("Access uri [{}]", request.getRequestURI());
                 checkToken(token);
                 checkAuthority(request, token);

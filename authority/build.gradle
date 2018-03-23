@@ -3,6 +3,6 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: junitVersion
 
     compile project(':sys')
-    compile project(':captcha')
+
 }
 

@@ -1,4 +1,4 @@
-package com.zhp.authority.model;
+package com.zhp.sys.model;
 
 import java.io.Serializable;
 

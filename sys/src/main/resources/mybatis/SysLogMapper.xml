@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhp.sys.dao.SysLogMapper">
+  <resultMap id="BaseResultMap" type="com.zhp.sys.model.SysLog">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="VARCHAR" property="uid" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="action" jdbcType="VARCHAR" property="action" />
+    <result column="action_time" jdbcType="TIMESTAMP" property="actionTime" />
+    <result column="action_cost_time" jdbcType="BIGINT" property="actionCostTime" />
+    <result column="action_group" jdbcType="VARCHAR" property="actionGroup" />
+    <result column="action_status" jdbcType="VARCHAR" property="actionStatus" />
+    <result column="action_status_desc" jdbcType="VARCHAR" property="actionStatusDesc" />
+    <result column="business_status" jdbcType="VARCHAR" property="businessStatus" />
+    <result column="business_status_desc" jdbcType="VARCHAR" property="businessStatusDesc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, uid, ip, action, action_time, action_cost_time, action_group, action_status, 
+    action_status_desc, business_status, business_status_desc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_log
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_log
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.zhp.sys.model.SysLog">
+    insert into sys_log ( uid, ip, action,
+      action_time, action_cost_time, action_group, 
+      action_status, action_status_desc, business_status, 
+      business_status_desc)
+    values (#{uid,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{action,jdbcType=VARCHAR},
+      #{actionTime,jdbcType=TIMESTAMP}, #{actionCostTime,jdbcType=BIGINT}, #{actionGroup,jdbcType=VARCHAR},
+      #{actionStatus,jdbcType=VARCHAR}, #{actionStatusDesc,jdbcType=VARCHAR}, #{businessStatus,jdbcType=VARCHAR}, 
+      #{businessStatusDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhp.sys.model.SysLog">
+    insert into sys_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="action != null">
+        action,
+      </if>
+      <if test="actionTime != null">
+        action_time,
+      </if>
+      <if test="actionCostTime != null">
+        action_cost_time,
+      </if>
+      <if test="actionGroup != null">
+        action_group,
+      </if>
+      <if test="actionStatus != null">
+        action_status,
+      </if>
+      <if test="actionStatusDesc != null">
+        action_status_desc,
+      </if>
+      <if test="businessStatus != null">
+        business_status,
+      </if>
+      <if test="businessStatusDesc != null">
+        business_status_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null">
+        #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="actionTime != null">
+        #{actionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actionCostTime != null">
+        #{actionCostTime,jdbcType=BIGINT},
+      </if>
+      <if test="actionGroup != null">
+        #{actionGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="actionStatus != null">
+        #{actionStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="actionStatusDesc != null">
+        #{actionStatusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="businessStatus != null">
+        #{businessStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="businessStatusDesc != null">
+        #{businessStatusDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhp.sys.model.SysLog">
+    update sys_log
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="action != null">
+        action = #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="actionTime != null">
+        action_time = #{actionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="actionCostTime != null">
+        action_cost_time = #{actionCostTime,jdbcType=BIGINT},
+      </if>
+      <if test="actionGroup != null">
+        action_group = #{actionGroup,jdbcType=VARCHAR},
+      </if>
+      <if test="actionStatus != null">
+        action_status = #{actionStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="actionStatusDesc != null">
+        action_status_desc = #{actionStatusDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="businessStatus != null">
+        business_status = #{businessStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="businessStatusDesc != null">
+        business_status_desc = #{businessStatusDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhp.sys.model.SysLog">
+    update sys_log
+    set uid = #{uid,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      action = #{action,jdbcType=VARCHAR},
+      action_time = #{actionTime,jdbcType=TIMESTAMP},
+      action_cost_time = #{actionCostTime,jdbcType=BIGINT},
+      action_group = #{actionGroup,jdbcType=VARCHAR},
+      action_status = #{actionStatus,jdbcType=VARCHAR},
+      action_status_desc = #{actionStatusDesc,jdbcType=VARCHAR},
+      business_status = #{businessStatus,jdbcType=VARCHAR},
+      business_status_desc = #{businessStatusDesc,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

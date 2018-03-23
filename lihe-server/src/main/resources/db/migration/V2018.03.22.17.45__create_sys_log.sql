@@ -10,9 +10,11 @@ CREATE TABLE `sys_log` (
   `ip` varchar(32) DEFAULT NULL,
   `action` varchar(255) DEFAULT NULL,
   `action_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `action_cost_time` int(11) DEFAULT NULL,
+  `action_cost_time` bigint(20) DEFAULT NULL,
   `action_group` varchar(255) DEFAULT NULL,
   `action_status` varchar(32) DEFAULT NULL,
-  `action_status_desc` varchar(255) DEFAULT NULL,
+  `action_status_desc` varchar(2048) DEFAULT NULL,
+  `business_status` varchar(32) DEFAULT NULL,
+  `business_status_desc` longtext,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

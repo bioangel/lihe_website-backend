@@ -1,7 +1,6 @@
 package com.zhp.authority.api;
 
 import com.google.common.collect.ImmutableMap;
-import com.zhp.authority.base.HttpHeader;
 import com.zhp.authority.dbservice.AccountService;
 import com.zhp.authority.dbservice.AuthorityService;
 import com.zhp.authority.dbservice.RoleService;
@@ -12,7 +11,6 @@ import com.zhp.authority.dto.UserLoginDTO;
 import com.zhp.authority.model.AccountRole;
 import com.zhp.authority.model.AuthAccount;
 import com.zhp.authority.model.AuthRole;
-import com.zhp.authority.model.LoginVO;
 import com.zhp.cache.base.CacheConstants;
 import com.zhp.cache.base.CacheOperation;
 import com.zhp.captcha.cache.CaptchaCache;
@@ -22,6 +20,9 @@ import com.zhp.common.exception.ErrorCode;
 import com.zhp.common.exception.ErrorEntity;
 import com.zhp.common.utils.CommonUtils;
 import com.zhp.common.utils.Md5Util;
+import com.zhp.sys.base.AccessConstants;
+import com.zhp.sys.base.SystemLog;
+import com.zhp.sys.model.LoginVO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class AccountController {
     @Autowired(required = false)
     private CaptchaConfig captchaSwitchConfig;
 
+    @SystemLog(action = "LOGIN", group = "ACCOUNT")
     @RequestMapping(value = "login", method = {RequestMethod.POST})
     public ResponseEntity login(@Valid @RequestBody UserLoginDTO account) {
         checkCaptcha(account);
@@ -75,7 +77,7 @@ public class AccountController {
                 ? CacheConstants.EXPIRE_TIME : account.getTime();
         String token = CommonUtils.getUuid();
         mcService.save(token, new LoginVO(result.get(0).getUuid(), time), time);
-        return ResponseEntity.ok().body(ImmutableMap.of(HttpHeader.TOKEN, token,
+        return ResponseEntity.ok().body(ImmutableMap.of(AccessConstants.TOKEN, token,
                 "menu", authorityService.findLeftMenu(roleIdList),
                 "uid", result.get(0).getUuid()));
     }
