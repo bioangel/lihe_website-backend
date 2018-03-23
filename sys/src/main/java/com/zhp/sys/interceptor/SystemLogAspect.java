@@ -1,6 +1,7 @@
 package com.zhp.sys.interceptor;
 
 import com.zhp.cache.base.CacheOperation;
+import com.zhp.common.exception.BadRequestException;
 import com.zhp.sys.base.AccessConstants;
 import com.zhp.sys.base.SystemLog;
 import com.zhp.sys.dbservice.SysLogService;
@@ -61,7 +62,15 @@ public class SystemLogAspect {
         sysLog.get().setActionCostTime(new Date().getTime() - beginTime.get());
         sysLog.get().setActionStatus("FAILED");
         sysLog.get().setActionStatusDesc(exception.getMessage());
+        parseException(exception);
         sysLogService.asyncSaveLog(sysLog.get());
+    }
+
+    private void parseException(Exception exception) {
+        if (exception instanceof BadRequestException) {
+            sysLog.get().setBusinessStatus(((BadRequestException) exception).getErrorCode().getStatus().toString());
+            sysLog.get().setBusinessStatusDesc(((BadRequestException) exception).getErrorCode().getMessage());
+        }
     }
 
     @Around("controllerAspect()")
@@ -69,7 +78,7 @@ public class SystemLogAspect {
         init();
         Object target = pjp.getTarget();
         String methodName = pjp.getSignature().getName();
-        Class[] parameterTypes = ((MethodSignature)pjp.getSignature()).getMethod().getParameterTypes();
+        Class[] parameterTypes = ((MethodSignature) pjp.getSignature()).getMethod().getParameterTypes();
         Method method = target.getClass().getMethod(methodName, parameterTypes);
         SystemLog systemlog = method.getAnnotation(SystemLog.class);
         sysLog.get().setAction(systemlog.action());
