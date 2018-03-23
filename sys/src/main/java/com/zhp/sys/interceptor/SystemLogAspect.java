@@ -8,6 +8,7 @@ import com.zhp.sys.dbservice.SysLogService;
 import com.zhp.sys.model.LoginVO;
 import com.zhp.sys.model.SysLog;
 import com.zhp.sys.utils.SysUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -97,11 +98,14 @@ public class SystemLogAspect {
 
     private void parseRequest() {
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        sysLog.get().setIp(SysUtils.getIp(request));
         String token = request.getHeader(AccessConstants.TOKEN);
+        if (StringUtils.isBlank(token)) {
+            return;
+        }
         LoginVO tokenRef = cacheOperation.get(token, LoginVO.class);
         if (tokenRef != null) {
             sysLog.get().setUid(tokenRef.getUid());
         }
-        sysLog.get().setIp(SysUtils.getIp(request));
     }
 }
