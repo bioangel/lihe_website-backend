@@ -76,7 +76,6 @@ public class SystemLogAspect {
         sysLog.get().setActionGroup(systemlog.group());
 
         parseRequest();
-
         ResponseEntity result = (ResponseEntity) pjp.proceed();
         sysLog.get().setActionStatus("SUCCESS");
         sysLog.get().setBusinessStatus(result.getStatusCode().toString());

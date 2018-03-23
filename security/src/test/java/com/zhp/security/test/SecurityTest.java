@@ -1,4 +1,4 @@
-package com.lenovo.smarthr.security.test;
+package com.zhp.security.test;
 
 import com.zhp.security.utils.SecurityUtils;
 import org.junit.Ignore;
@@ -23,7 +23,7 @@ public class SecurityTest {
     @Autowired
     private SecurityUtils securityUtils;
 
-    @Ignore
+//    @Ignore
     @Test
     public void generateEncryptPassword() {
         String text = "1412";

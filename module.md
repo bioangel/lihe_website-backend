@@ -21,7 +21,7 @@
 
 ## 6.authority
 * 权限认证模块
-* 依赖database、captcha模块
+* 依赖sys模块
 
 ## 7.lihe-server
 * lihe 应用服务器，包含server系统功能的代码
@@ -29,4 +29,4 @@
 
 ## 8.sys
 * 系统底层通用模块
-* 依赖database模块
+* 依赖database, captcha模块
