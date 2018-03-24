@@ -12,10 +12,6 @@ import java.util.regex.Pattern;
  * Created by zhouhh2 on 2016/12/14.
  */
 public class CommonUtils {
-    public static String getuuid() {
-        return UUID.randomUUID().toString().replace("-", "");
-    }
-
     public static String getClassName(Class<?> cls) {
         return cls.getName().substring(cls.getName().lastIndexOf('.') + 1);
     }

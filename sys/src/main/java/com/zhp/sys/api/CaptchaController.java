@@ -30,7 +30,7 @@ public class CaptchaController {
     @SystemLog(action = "CAPTCHA", group = "CAPTCHA")
     @RequestMapping(method = {RequestMethod.GET}, value = "/captcha")
     public ResponseEntity captcha() throws ServletException, IOException {
-        String authToken = CommonUtils.getuuid();
+        String authToken = CommonUtils.getUuid();
         CaptchaDTO captchaDTO = captchaService.getCaptcha();
         Map<String, String> captchaMap = new HashMap<>();
         captchaMap.put("code", authToken);
