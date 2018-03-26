@@ -132,6 +132,7 @@ public class AuthorityService {
 
     public void deleteAuth(List<String> aidList) {
         authorityDao.deleteAuth(aidList);
+        authorityApiDao.deleteByAuthIds(aidList);
         authorityDao.deleteAuthWithRole(aidList);
     }
 
@@ -150,5 +151,12 @@ public class AuthorityService {
 
     public List<AuthorityApi> getAuthorityApiByAuthId(String authId) {
         return authorityApiDao.listByAuthId(authId);
+    }
+
+    public int updateAuthApiByAuthId(String authId, List<String> apis) {
+        List<String> authList = new ArrayList<>();
+        authList.add(authId);
+        authorityApiDao.deleteByAuthIds(authList);
+        return authorityApiDao.insertApi(authId, apis);
     }
 }

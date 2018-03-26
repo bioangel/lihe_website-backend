@@ -19,4 +19,8 @@ public interface AuthorityApiMapper {
     int updateByPrimaryKey(AuthorityApi record);
 
     List<AuthorityApi> listByAuthId(@Param("authorityId") String authorityId);
+
+    int deleteByAuthIds(@Param("authIdList") List<String> authIdList);
+
+    int insertApi(@Param("authorityId") String authorityId, @Param("apiList") List<String> apiList);
 }

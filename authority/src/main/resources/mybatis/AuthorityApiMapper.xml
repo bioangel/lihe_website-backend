@@ -26,6 +26,23 @@
     delete from auth_authority_api
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
+  <delete id="deleteByAuthIds" parameterType="java.lang.String">
+    delete from auth_authority_api
+    where authority_id IN
+    <foreach collection="authIdList" item="item" index="index" separator="," open="(" close=")">
+      #{item}
+    </foreach>
+  </delete>
+
+  <insert id="insertApi">
+    insert into auth_authority_api (authority_id, api)
+    values
+      <foreach collection="apiList" item="item" index="index" separator=",">
+        (#{authorityId,jdbcType=VARCHAR},#{item})
+      </foreach>
+  </insert>
+
   <insert id="insert" parameterType="com.zhp.authority.model.AuthorityApi">
     insert into auth_authority_api (id, authority_id, api
       )

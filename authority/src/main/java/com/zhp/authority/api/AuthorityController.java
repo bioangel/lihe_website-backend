@@ -42,9 +42,9 @@ public class AuthorityController {
     @RequestMapping(value = "{rid}", method = {RequestMethod.GET})
     public ResponseEntity getAuthByRoleId(@PathVariable("rid") String rid) {
         Map result = new HashMap();
-        result.put("rid",rid);
-        result.put("authorList",authorityService.selectAuthByRoleId(rid));
-        result.put("allAuthorList",getAllAuth());
+        result.put("rid", rid);
+        result.put("authorList", authorityService.selectAuthByRoleId(rid));
+        result.put("allAuthorList", getAllAuth());
         return ResponseEntity.ok().body(result);
     }
 
@@ -56,7 +56,7 @@ public class AuthorityController {
             return ResponseEntity.ok().build();
         }
         return new ResponseEntity<>(new ErrorEntity(ErrorCode.SYSTEM_ERROR,
-                ErrorCode.SYSTEM_ERROR.getMessage(),null,""), ErrorCode.SYSTEM_ERROR.getStatus());
+                ErrorCode.SYSTEM_ERROR.getMessage(), null, ""), ErrorCode.SYSTEM_ERROR.getStatus());
     }
 
     @SystemLog(action = "UPDATE", group = "AUTHORITY")
@@ -64,11 +64,11 @@ public class AuthorityController {
     public ResponseEntity update(@RequestBody AuthAuthority data) {
         int result = authorityService.updateAuth(data);
         if (result > 0) {
-            mcService.save(CacheConstants.UID_API,authorityService.getUidApi(),CacheConstants.EXPIRE_TIME);
+            mcService.save(CacheConstants.UID_API, authorityService.getUidApi(), CacheConstants.EXPIRE_TIME);
             return ResponseEntity.ok().build();
         }
         return new ResponseEntity<>(new ErrorEntity(ErrorCode.SYSTEM_ERROR,
-                ErrorCode.SYSTEM_ERROR.getMessage(),null,""), ErrorCode.SYSTEM_ERROR.getStatus());
+                ErrorCode.SYSTEM_ERROR.getMessage(), null, ""), ErrorCode.SYSTEM_ERROR.getStatus());
     }
 
     @SystemLog(action = "AUTH_LIST_ALL", group = "AUTHORITY")
@@ -80,14 +80,23 @@ public class AuthorityController {
     @SystemLog(action = "DELETE", group = "AUTHORITY")
     @RequestMapping(value = "delete", method = {RequestMethod.POST})
     public ResponseEntity delete(@RequestBody Map map) {
-        authorityService.deleteAuth((List<String>)map.get("aid"));
-        mcService.save(CacheConstants.UID_API,authorityService.getUidApi(),CacheConstants.EXPIRE_TIME);
+        authorityService.deleteAuth((List<String>) map.get("aid"));
+        mcService.save(CacheConstants.UID_API, authorityService.getUidApi(), CacheConstants.EXPIRE_TIME);
         return ResponseEntity.ok().build();
     }
 
-    @SystemLog(action = "AUTH_API_BY_ID", group = "AUTHORITY")
+    @SystemLog(action = "GET_AUTH_API_BY_ID", group = "AUTHORITY")
     @RequestMapping(value = "api/{authId}", method = {RequestMethod.GET})
     public ResponseEntity getAuthApiById(@PathVariable("authId") String authId) {
         return ResponseEntity.ok().body(authorityService.getAuthorityApiByAuthId(authId));
+    }
+
+    @SystemLog(action = "UPDATE_AUTH_API_BY_ID", group = "AUTHORITY")
+    @RequestMapping(value = "api/{authId}", method = {RequestMethod.POST})
+    public ResponseEntity updateAuthApiById(@PathVariable("authId") String authId,
+                                            @RequestBody List<String> apis) {
+        authorityService.updateAuthApiByAuthId(authId, apis);
+        mcService.save(CacheConstants.UID_API, authorityService.getUidApi(), CacheConstants.EXPIRE_TIME);
+        return ResponseEntity.ok().build();
     }
 }

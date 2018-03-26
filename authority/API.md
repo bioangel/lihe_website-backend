@@ -379,3 +379,14 @@ allAuthorList的内容同/authority/get返回中的“menuList”字段
     }
 ]
 ```
+
+## /authority/api/{authId}
+* 根据权限id，更新对应的api路径列表
+* POST
+* header: token
+* 参数
+```
+["/authority","/uuuuuu"]
+```
+* 返回数据
+    HTTP Status
