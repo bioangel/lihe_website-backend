@@ -1,7 +1,6 @@
 package com.zhp.authority.api;
 
 import com.zhp.authority.dbservice.AuthorityService;
-import com.zhp.authority.dto.AuthAuthorityDTO;
 import com.zhp.authority.model.AuthAuthority;
 import com.zhp.cache.base.CacheConstants;
 import com.zhp.cache.base.CacheOperation;
