@@ -54,12 +54,12 @@ public class OrganizationController {
     }
 
     @RequestMapping(value = "getById", method = {RequestMethod.GET})
-    public AuthOrganization getById(@RequestParam("id") Integer id) {
-        return authOrganizationService.getOrgById(id);
+    public ResponseEntity getById(@RequestParam("id") Integer id) {
+        return ResponseEntity.ok().body(authOrganizationService.getOrgById(id));
     }
 
     @RequestMapping(value = "getList", method = {RequestMethod.GET})
-    public List<AuthOrganization> getList() {
-        return authOrganizationService.getOrgList();
+    public ResponseEntity getList() {
+        return ResponseEntity.ok().body(authOrganizationService.getOrgList());
     }
 }

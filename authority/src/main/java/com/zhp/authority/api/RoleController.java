@@ -8,6 +8,7 @@ import com.zhp.cache.base.CacheConstants;
 import com.zhp.cache.base.CacheOperation;
 import com.zhp.common.exception.ErrorCode;
 import com.zhp.common.exception.ErrorEntity;
+import com.zhp.sys.base.SystemLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +38,13 @@ public class RoleController {
     @Autowired
     private CacheOperation mcService;
 
+    @SystemLog(action = "ROLE_LIST", group = "ROLE")
     @RequestMapping(method = {RequestMethod.GET})
-    public List<AuthRole> getRoles() {
-        return roleService.getRoles();
+    public ResponseEntity getRoles() {
+        return ResponseEntity.ok().body(roleService.getRoles());
     }
 
+    @SystemLog(action = "SWITCH", group = "ROLE")
     @RequestMapping(value = "switch", method = {RequestMethod.POST})
     public ResponseEntity switchRoleEnable(@RequestBody AuthRole data) {
         int result = roleService.updateRoleByPrimaryKeySelective(data);
@@ -53,6 +56,7 @@ public class RoleController {
                 ErrorCode.SYSTEM_ERROR.getMessage(), null, ""), ErrorCode.SYSTEM_ERROR.getStatus());
     }
 
+    @SystemLog(action = "SAVE", group = "ROLE")
     @RequestMapping(value = "save", method = {RequestMethod.POST})
     public ResponseEntity save(@RequestBody RoleAuthSaveDTO data) {
         int result = roleService.saveRoleAuth(data);
@@ -64,6 +68,7 @@ public class RoleController {
                 ErrorCode.SYSTEM_ERROR.getMessage(), null, ""), ErrorCode.SYSTEM_ERROR.getStatus());
     }
 
+    @SystemLog(action = "UPDATE", group = "ROLE")
     @RequestMapping(value = "modify", method = {RequestMethod.POST})
     public ResponseEntity modify(@RequestBody RoleAuthSaveDTO data) {
         roleService.modifyRoleAuth(data);
@@ -71,6 +76,7 @@ public class RoleController {
         return ResponseEntity.ok().build();
     }
 
+    @SystemLog(action = "DELETE", group = "ROLE")
     @RequestMapping(value = "delete", method = {RequestMethod.POST})
     public ResponseEntity delete(@RequestBody Map map) {
         roleService.deleteRoleById((List<String>) map.get("rid"));

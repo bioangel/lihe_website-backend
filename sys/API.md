@@ -1,7 +1,8 @@
-# captcha 模块API
+# sys 模块API
 ## /captcha
 * 获取验证码
 * GET
+* captcha.enabled 参数为true时，接口才可用
 * 返回数据
 ```
 {
@@ -9,4 +10,3 @@
     "jpgBase64": "jpg"
 }
 ```
-* captcha.enabled 参数为true时，接口才可用

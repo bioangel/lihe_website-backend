@@ -99,6 +99,7 @@ public class AccountController {
 
     }
 
+    @SystemLog(action = "SAVE", group = "ACCOUNT")
     @RequestMapping(value = "save", method = RequestMethod.POST)
     public ResponseEntity saveAccount(@RequestBody AuthAccount account) {
         account.setPassword(Md5Util.md5Encode(account.getPassword()));
@@ -113,6 +114,7 @@ public class AccountController {
                 ErrorCode.CREATE_USER_ERROR.getMessage()));
     }
 
+    @SystemLog(action = "ROLE_SAVE", group = "ACCOUNT")
     @RequestMapping(value = "role/save", method = RequestMethod.POST)
     public ResponseEntity saveAccountRole(@RequestBody RoleAccountSaveDTO record) {
         roleService.saveAccount(record);
@@ -121,23 +123,25 @@ public class AccountController {
     }
 
     @RequestMapping(value = "test", method = RequestMethod.GET)
-    public Map<String, String> test() {
+    public ResponseEntity test() {
         Map<String, String> map = new HashMap<>();
         map.put("message", "ok");
-        return map;
+        return ResponseEntity.ok().body(map);
     }
 
+    @SystemLog(action = "USER_LIST", group = "ACCOUNT")
     @RequestMapping(value = "userList", method = RequestMethod.GET)
-    public Map<String, Object> getUserList() {
+    public ResponseEntity getUserList() {
         Map<String, Object> userMap = new HashMap<>();
         List<AccountRole> lst = accountService.getAccount().stream()
                 .filter(accountRole -> !"admin".equals(accountRole.getUsername())).collect(Collectors.toList());
         lst.forEach(accountRole -> userMap.put(accountRole.getUuid(), accountRole.getUsername()));
-        return userMap;
+        return ResponseEntity.ok().body(userMap);
     }
 
+    @SystemLog(action = "USER_ROLE_LIST", group = "ACCOUNT")
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public AllAccountRoleDTO getAccount() {
+    public ResponseEntity getAccount() {
         List<AccountRole> lst = accountService.getAccount();
         Map<String, AccountDTO> userMap = new HashMap<>();
         List<AccountDTO> userList = lst.stream()
@@ -152,7 +156,7 @@ public class AccountController {
                     return obj;
                 }).distinct().collect(Collectors.toList());
         List<AuthRole> roleList = roleService.getRolesWithEnable();
-        return new AllAccountRoleDTO(userList, roleList);
+        return ResponseEntity.ok().body(new AllAccountRoleDTO(userList, roleList));
     }
 
     private AccountDTO getAccountDTO(Map<String, AccountDTO> userMap,
@@ -167,6 +171,7 @@ public class AccountController {
         return obj;
     }
 
+    @SystemLog(action = "DELETE", group = "ACCOUNT")
     @RequestMapping(value = "delete", method = RequestMethod.POST)
     public ResponseEntity saveAccountRole(@RequestBody Map map) {
         accountService.deleteAccountById((List<String>) map.get("uid"));

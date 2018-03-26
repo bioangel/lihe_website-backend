@@ -7,6 +7,7 @@ import com.zhp.cache.base.CacheConstants;
 import com.zhp.cache.base.CacheOperation;
 import com.zhp.common.exception.ErrorCode;
 import com.zhp.common.exception.ErrorEntity;
+import com.zhp.sys.base.SystemLog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,21 +32,24 @@ public class AuthorityController {
     @Autowired
     private CacheOperation mcService;
 
+    @SystemLog(action = "AUTH_LIST", group = "AUTHORITY")
     @RequestMapping(value = "get", method = {RequestMethod.GET})
-    public List<AuthAuthorityDTO> getAllAuth() {
-        return authorityService.findAuthTreeAll();
+    public ResponseEntity getAllAuth() {
+        return ResponseEntity.ok().body(authorityService.findAuthTreeAll());
 //        return (List<AuthAuthorityDTO>)cacheManager.getCacheByKey(CacheConstants.AUTH_TREE).getCacheByKey();
     }
 
+    @SystemLog(action = "AUTH_LIST_BY_ID", group = "AUTHORITY")
     @RequestMapping(value = "{rid}", method = {RequestMethod.GET})
-    public Map getAuthByRoleId(@PathVariable("rid") String rid) {
+    public ResponseEntity getAuthByRoleId(@PathVariable("rid") String rid) {
         Map result = new HashMap();
         result.put("rid",rid);
         result.put("authorList",authorityService.selectAuthByRoleId(rid));
         result.put("allAuthorList",getAllAuth());
-        return result;
+        return ResponseEntity.ok().body(result);
     }
 
+    @SystemLog(action = "SAVE", group = "AUTHORITY")
     @RequestMapping(value = "save", method = {RequestMethod.POST})
     public ResponseEntity save(@RequestBody AuthAuthority data) {
         int result = authorityService.insertAuth(data);
@@ -56,6 +60,7 @@ public class AuthorityController {
                 ErrorCode.SYSTEM_ERROR.getMessage(),null,""), ErrorCode.SYSTEM_ERROR.getStatus());
     }
 
+    @SystemLog(action = "UPDATE", group = "AUTHORITY")
     @RequestMapping(value = "update", method = {RequestMethod.POST})
     public ResponseEntity update(@RequestBody AuthAuthority data) {
         int result = authorityService.updateAuth(data);
@@ -67,11 +72,13 @@ public class AuthorityController {
                 ErrorCode.SYSTEM_ERROR.getMessage(),null,""), ErrorCode.SYSTEM_ERROR.getStatus());
     }
 
+    @SystemLog(action = "AUTH_LIST_ALL", group = "AUTHORITY")
     @RequestMapping(value = "all", method = {RequestMethod.GET})
-    public List<AuthAuthority> getAllAuthNoTree() {
-        return authorityService.findAllAuth();
+    public ResponseEntity getAllAuthNoTree() {
+        return ResponseEntity.ok().body(authorityService.findAllAuth());
     }
 
+    @SystemLog(action = "DELETE", group = "AUTHORITY")
     @RequestMapping(value = "delete", method = {RequestMethod.POST})
     public ResponseEntity delete(@RequestBody Map map) {
         authorityService.deleteAuth((List<String>)map.get("aid"));
