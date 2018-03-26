@@ -2,8 +2,10 @@ package com.zhp.authority.dbservice;
 
 import com.zhp.authority.dao.AuthAuthorityMapper;
 import com.zhp.authority.dao.AuthRoleAuthorityMapper;
+import com.zhp.authority.dao.AuthorityApiMapper;
 import com.zhp.authority.dto.AuthAuthorityDTO;
 import com.zhp.authority.model.AuthAuthority;
+import com.zhp.authority.model.AuthorityApi;
 import com.zhp.authority.model.Menu;
 import com.zhp.common.model.CommonKvDTO;
 import com.zhp.common.utils.CommonUtils;
@@ -28,6 +30,9 @@ public class AuthorityService {
 
     @Autowired
     private AuthRoleAuthorityMapper authRoleAuthorityDao;
+
+    @Autowired
+    private AuthorityApiMapper authorityApiDao;
 
     public List<Menu> findLeftMenu(List<String> roleId) {
         List<AuthAuthority> authorityList = authorityDao.findMenuByRoleId(roleId);
@@ -141,5 +146,9 @@ public class AuthorityService {
         }
         return null;
 
+    }
+
+    public List<AuthorityApi> getAuthorityApiByAuthId(String authId) {
+        return authorityApiDao.listByAuthId(authId);
     }
 }

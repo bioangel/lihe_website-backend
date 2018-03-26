@@ -364,3 +364,18 @@ allAuthorList的内容同/authority/get返回中的“menuList”字段
     }
 ]
 ```
+
+## /authority/api/{authId}
+* 根据权限id，获取对应的api路径列表
+* GET
+* header: token
+* 返回数据
+```
+[
+    {
+        "id": null,
+        "authorityId": "a40f27d3609811e78810fa163ef7fc74",
+        "api": "/authority"
+    }
+]
+```

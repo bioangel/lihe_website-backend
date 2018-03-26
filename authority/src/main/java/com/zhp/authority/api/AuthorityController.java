@@ -84,4 +84,10 @@ public class AuthorityController {
         mcService.save(CacheConstants.UID_API,authorityService.getUidApi(),CacheConstants.EXPIRE_TIME);
         return ResponseEntity.ok().build();
     }
+
+    @SystemLog(action = "AUTH_API_BY_ID", group = "AUTHORITY")
+    @RequestMapping(value = "api/{authId}", method = {RequestMethod.GET})
+    public ResponseEntity getAuthApiById(@PathVariable("authId") String authId) {
+        return ResponseEntity.ok().body(authorityService.getAuthorityApiByAuthId(authId));
+    }
 }

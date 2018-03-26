@@ -15,6 +15,13 @@
     from auth_authority_api
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="listByAuthId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select authority_id, api
+    from auth_authority_api
+    where authority_id = #{authorityId, jdbcType=VARCHAR}
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from auth_authority_api
     where id = #{id,jdbcType=INTEGER}
