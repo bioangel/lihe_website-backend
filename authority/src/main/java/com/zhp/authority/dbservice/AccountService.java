@@ -2,11 +2,11 @@ package com.zhp.authority.dbservice;
 
 import com.zhp.authority.dao.AuthAccountMapper;
 import com.zhp.authority.dto.RoleAccountSaveDTO;
-import com.zhp.authority.dto.UserLoginDTO;
 import com.zhp.authority.model.AccountRole;
 import com.zhp.authority.model.AuthAccount;
 import com.zhp.common.utils.Md5Util;
 import com.zhp.security.utils.SecurityUtils;
+import com.zhp.sys.model.UserLoginDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

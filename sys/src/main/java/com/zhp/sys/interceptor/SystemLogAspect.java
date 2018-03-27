@@ -7,6 +7,7 @@ import com.zhp.sys.base.SystemLog;
 import com.zhp.sys.dbservice.SysLogService;
 import com.zhp.sys.model.LoginVO;
 import com.zhp.sys.model.SysLog;
+import com.zhp.sys.model.UserLoginDTO;
 import com.zhp.sys.utils.SysUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -32,6 +33,8 @@ public class SystemLogAspect {
     private static final ThreadLocal<Long> beginTime = new ThreadLocal();
 
     private static final ThreadLocal<SysLog> sysLog = new ThreadLocal();
+
+    private static final ThreadLocal<SystemLog> systemLogThreadLocal = new ThreadLocal();
 
     @Autowired
     private CacheOperation cacheOperation;
@@ -71,6 +74,8 @@ public class SystemLogAspect {
         if (exception instanceof BadRequestException) {
             sysLog.get().setBusinessStatus(((BadRequestException) exception).getErrorCode().getStatus().toString());
             sysLog.get().setBusinessStatusDesc(((BadRequestException) exception).getErrorCode().getMessage());
+        } else {
+            sysLog.get().setBusinessStatus("500");
         }
     }
 
@@ -81,22 +86,26 @@ public class SystemLogAspect {
         String methodName = pjp.getSignature().getName();
         Class[] parameterTypes = ((MethodSignature) pjp.getSignature()).getMethod().getParameterTypes();
         Method method = target.getClass().getMethod(methodName, parameterTypes);
-        SystemLog systemlog = method.getAnnotation(SystemLog.class);
-        sysLog.get().setAction(systemlog.action());
-        sysLog.get().setActionGroup(systemlog.group());
+        Object[] args = pjp.getArgs();
+        systemLogThreadLocal.set(method.getAnnotation(SystemLog.class));
 
-        parseRequest();
+        parseRequest(args);
         ResponseEntity result = (ResponseEntity) pjp.proceed();
         sysLog.get().setActionStatus("SUCCESS");
         sysLog.get().setBusinessStatus(result.getStatusCode().toString());
-        if (systemlog.isGetReturn()) {
+        if (systemLogThreadLocal.get().isGetReturn()) {
             sysLog.get().setBusinessStatusDesc(result.getBody().toString());
         }
         sysLogService.asyncSaveLog(sysLog.get());
         return result;
     }
 
-    private void parseRequest() {
+    private void parseRequest(Object[] args) {
+        sysLog.get().setAction(systemLogThreadLocal.get().action());
+        sysLog.get().setActionGroup(systemLogThreadLocal.get().group());
+        if (sysLog.get().getAction().equalsIgnoreCase(AccessConstants.LOGIN_ACTION)) {
+            parseLogin(args);
+        }
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         sysLog.get().setIp(SysUtils.getIp(request));
         String token = request.getHeader(AccessConstants.TOKEN);
@@ -105,7 +114,15 @@ public class SystemLogAspect {
         }
         LoginVO tokenRef = cacheOperation.get(token, LoginVO.class);
         if (tokenRef != null) {
-            sysLog.get().setUid(tokenRef.getUid());
+            sysLog.get().setUid(tokenRef.getUname());
         }
+    }
+
+    private void parseLogin(Object[] args) {
+        if (args == null || args.length == 0) {
+            return;
+        }
+        UserLoginDTO user = (UserLoginDTO) args[0];
+        sysLog.get().setUid(user.getUsername());
     }
 }

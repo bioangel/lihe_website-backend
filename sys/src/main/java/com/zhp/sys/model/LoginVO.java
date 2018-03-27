@@ -8,13 +8,15 @@ import java.io.Serializable;
 public class LoginVO implements Serializable {
     private static final long serialVersionUID = 8904886575998544195L;
     private String uid;
+    private String uname;
     private int time;
 
     public LoginVO() {
     }
 
-    public LoginVO(String uid, int time) {
+    public LoginVO(String uid, String uname, int time) {
         this.uid = uid;
+        this.uname = uname;
         this.time = time;
     }
 
@@ -32,5 +34,13 @@ public class LoginVO implements Serializable {
 
     public void setTime(int time) {
         this.time = time;
+    }
+
+    public String getUname() {
+        return uname;
+    }
+
+    public void setUname(String uname) {
+        this.uname = uname;
     }
 }

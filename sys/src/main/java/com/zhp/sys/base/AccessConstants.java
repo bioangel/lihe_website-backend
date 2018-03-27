@@ -6,4 +6,5 @@ package com.zhp.sys.base;
 public class AccessConstants {
     public static final String TOKEN = "token";
     public static final String ACCESS_PREFIX = "access";
+    public static final String LOGIN_ACTION = "LOGIN";
 }

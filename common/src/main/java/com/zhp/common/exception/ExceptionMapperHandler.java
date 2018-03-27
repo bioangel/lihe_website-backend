@@ -7,14 +7,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.beanvalidation.MethodValidationPostProcessor;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
-import javax.validation.ConstraintViolationException;
-import javax.validation.ValidationException;
 import java.io.IOException;
+import java.util.List;
 
 @Component
 @ControllerAdvice
@@ -41,19 +41,14 @@ public class ExceptionMapperHandler {
                 null, null), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ExceptionHandler(ValidationException.class)
-    public ResponseEntity<ErrorEntity> exceptionHandler(ConstraintViolationException exception) {
-        logger.error("ResponseException exception: {}", ExceptionUtils.getStackTrace(exception));
-        return new ResponseEntity<>(new ErrorEntity(ErrorCode.PARAMETER_ERROR,
-                ErrorCode.PARAMETER_ERROR.getMessage(),
-                null, null), HttpStatus.BAD_REQUEST);
-    }
-
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorEntity> exceptionHandler(MethodArgumentNotValidException exception) {
+        List<ObjectError> errors = exception.getBindingResult().getAllErrors();
         logger.error("ResponseException exception: {}", ExceptionUtils.getStackTrace(exception));
-        return new ResponseEntity<>(new ErrorEntity(ErrorCode.PARAMETER_ERROR, exception.getMessage(),
-                null, ExceptionUtils.getStackTrace(exception)),
+        StringBuffer errorMsg = new StringBuffer();
+        errors.stream().forEach(x -> errorMsg.append(x.getDefaultMessage()).append(";"));
+        return new ResponseEntity<>(new ErrorEntity(ErrorCode.PARAMETER_ERROR, errorMsg.toString(),
+                null, null),
                 HttpStatus.BAD_REQUEST);
     }
 

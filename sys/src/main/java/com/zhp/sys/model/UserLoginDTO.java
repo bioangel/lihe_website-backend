@@ -1,12 +1,12 @@
-package com.zhp.authority.dto;
+package com.zhp.sys.model;
 
-import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 
 /**
  * Created by zhouhh2 on 2016/10/25.
  */
 public class UserLoginDTO {
-    @NotNull(message = "{NotNull.username}")
+    @NotBlank(message = "{NotNull.username}")
     private String username;
     private String password;
     private int time;
