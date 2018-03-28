@@ -161,8 +161,7 @@ public class AccountController {
 
     private AccountDTO getAccountDTO(Map<String, AccountDTO> userMap,
                                      AccountRole accountRole) {
-        AccountDTO obj;
-        obj = new AccountDTO(accountRole.getUuid(), accountRole.getNickName(),
+        AccountDTO obj = new AccountDTO(accountRole.getUuid(), accountRole.getNickName(),
                 accountRole.getEmail(), accountRole.getUsername(), accountRole.getOrganization());
         List<AuthRole> newRoles = new ArrayList<>();
         newRoles.add(new AuthRole(accountRole.getRid(), accountRole.getRname()));

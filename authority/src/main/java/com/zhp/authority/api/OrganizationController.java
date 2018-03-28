@@ -31,11 +31,11 @@ public class OrganizationController {
                 ErrorCode.SYSTEM_ERROR.getMessage(), null, ""), ErrorCode.SYSTEM_ERROR.getStatus());
     }
 
-    @RequestMapping(value = "delete", method = {RequestMethod.GET})
+    @RequestMapping(value = "delete", method = {RequestMethod.POST})
     public ResponseEntity delete(@RequestParam("id") Integer id) {
         int result = authOrganizationService.deleteOrg(id);
         if (result > 0) {
-            return ResponseEntity.ok("{}");
+            return ResponseEntity.ok().build();
         }
         return new ResponseEntity<>(new ErrorEntity(ErrorCode.SYSTEM_ERROR,
                 ErrorCode.SYSTEM_ERROR.getMessage(), null, ""), ErrorCode.SYSTEM_ERROR.getStatus());
