@@ -54,9 +54,9 @@ public class ExceptionMapperHandler {
 
     @ExceptionHandler(BaseResponseException.class)
     public ResponseEntity<ErrorEntity> exceptionHandler(BaseResponseException exception) {
-        logger.warn("ResponseException with status: [{}], errorCode: [{}]", exception.getStatus(),
+        logger.error("ResponseException with status: [{}], errorCode: [{}]", exception.getStatus(),
                 exception.getErrorCode());
-        logger.warn(ExceptionUtils.getStackTrace(exception));
+        logger.error(ExceptionUtils.getStackTrace(exception));
         return new ResponseEntity<>(new ErrorEntity(exception.getErrorCode(),
                 exception.getErrorCode().getMessage(),
                 exception.getErrorMessages(),

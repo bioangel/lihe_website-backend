@@ -44,9 +44,10 @@ public class AuthorityInterceptor extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(getHandlerInterceptorAdapter())
                 .addPathPatterns("/**")
-                .excludePathPatterns("/account/login",
-                                     "/error/**",
-                                     "/captcha");
+                .excludePathPatterns(AccessConstants.LOGIN_URI,
+                                     AccessConstants.ERROR_URI,
+                                     AccessConstants.CAPTCHA_URI,
+                                     AccessConstants.PUBLIC_URI);
         super.addInterceptors(registry);
     }
 
