@@ -6,6 +6,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `sys_log`;
 CREATE TABLE `sys_log` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `token` varchar(64) DEFAULT NULL,
   `uid` varchar(64) DEFAULT NULL,
   `ip` varchar(32) DEFAULT NULL,
   `action` varchar(255) DEFAULT NULL,

@@ -7,6 +7,8 @@ public class SysLog {
 
     private String uid;
 
+    private String token;
+
     private String ip;
 
     private String action;
@@ -118,5 +120,13 @@ public class SysLog {
 
     public void setBusinessStatusDesc(String businessStatusDesc) {
         this.businessStatusDesc = businessStatusDesc == null ? null : businessStatusDesc.trim();
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

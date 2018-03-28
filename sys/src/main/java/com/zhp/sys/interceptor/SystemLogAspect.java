@@ -22,6 +22,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.Map;
 
 /**
  * Created by zhouhh2 on 2018/3/22.
@@ -91,19 +92,26 @@ public class SystemLogAspect {
 
         parseRequest(args);
         ResponseEntity result = (ResponseEntity) pjp.proceed();
+        afterProceed(result);
+        sysLogService.asyncSaveLog(sysLog.get());
+        return result;
+    }
+
+    private void afterProceed(ResponseEntity result) {
         sysLog.get().setActionStatus("SUCCESS");
         sysLog.get().setBusinessStatus(result.getStatusCode().toString());
         if (systemLogThreadLocal.get().isGetReturn()) {
             sysLog.get().setBusinessStatusDesc(result.getBody().toString());
         }
-        sysLogService.asyncSaveLog(sysLog.get());
-        return result;
+        if (systemLogThreadLocal.get().action().equalsIgnoreCase(AccessConstants.LOGIN_ACTION)) {
+            sysLog.get().setToken(((Map)result.getBody()).get(AccessConstants.TOKEN).toString());
+        }
     }
 
     private void parseRequest(Object[] args) {
         sysLog.get().setAction(systemLogThreadLocal.get().action());
         sysLog.get().setActionGroup(systemLogThreadLocal.get().group());
-        if (sysLog.get().getAction().equalsIgnoreCase(AccessConstants.LOGIN_ACTION)) {
+        if (systemLogThreadLocal.get().action().equalsIgnoreCase(AccessConstants.LOGIN_ACTION)) {
             parseLogin(args);
         }
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
@@ -115,6 +123,7 @@ public class SystemLogAspect {
         LoginVO tokenRef = cacheOperation.get(token, LoginVO.class);
         if (tokenRef != null) {
             sysLog.get().setUid(tokenRef.getUname());
+            sysLog.get().setToken(token);
         }
     }
 
