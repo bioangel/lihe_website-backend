@@ -2,21 +2,18 @@ package com.zhp.db.config;
 
 import com.zhp.db.base.BaseDBConfig;
 import com.zhp.db.base.Constants;
+import com.zhp.db.base.CustomDBConfig;
 import com.zhp.security.utils.SecurityUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.MutablePropertyValues;
-import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
-import org.springframework.boot.bind.RelaxedDataBinder;
-import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.bind.Binder;
+import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -48,8 +45,6 @@ public class DataSourceConfigRegister implements EnvironmentAware {
 
     private Map<Object, Object> targetDataSources = new HashMap<>();
 
-    private PropertyValues dataSourcePropertyValues;
-
     private String customNames;
 
     @Autowired
@@ -64,6 +59,7 @@ public class DataSourceConfigRegister implements EnvironmentAware {
 
         this.targetDataSources.putAll(customDataSources);
         this.customDataSources.keySet().forEach(key -> DynamicDataSourceContextHolder.dataSourceIds.add(key));
+
         this.initOthersDataSource(environment);
         this.targetDataSources.putAll(othersDataSources);
         this.othersDataSources.keySet().forEach(key -> DynamicDataSourceContextHolder.dataSourceIds.add(key));
@@ -76,18 +72,8 @@ public class DataSourceConfigRegister implements EnvironmentAware {
     }
 
     private void setDatabaseCommonConfig(DataSource dataSource, Environment environment) {
-        RelaxedDataBinder dataBinder = new RelaxedDataBinder(dataSource);
-        dataBinder.setConversionService(new DefaultConversionService());
-        dataBinder.setIgnoreNestedProperties(false);
-        dataBinder.setIgnoreInvalidFields(false);
-        dataBinder.setIgnoreUnknownFields(true);
-        if (dataSourcePropertyValues == null) {
-            Map<String, Object> rpr = new RelaxedPropertyResolver(environment,
-                    Constants.PREFIX_COMMON).getSubProperties(".");
-            Map<String, Object> values = new HashMap<>(rpr);
-            dataSourcePropertyValues = new MutablePropertyValues(values);
-        }
-        dataBinder.bind(dataSourcePropertyValues);
+        Binder binder = Binder.get(environment);
+        binder.bind(Constants.PREFIX_COMMON, dataSource.getClass()).get();
     }
 
     public DataSource buildDataSource(BaseDBConfig baseDBConfig) {
@@ -115,12 +101,10 @@ public class DataSourceConfigRegister implements EnvironmentAware {
         if (!this.appDBConfig.isMultipleDs()) {
             return;
         }
-        RelaxedPropertyResolver customDs =
-                new RelaxedPropertyResolver(environment, Constants.PREFIX_CUSTOM + ".");
-        this.customNames = customDs.getProperty("names");
-        String port = customDs.getProperty("port");
+        this.customNames = environment.getProperty(Constants.PREFIX_CUSTOM + ".names");
+        String port = environment.getProperty(Constants.PREFIX_CUSTOM + ".port");
         for (String dsPrefix : this.customNames.split(",")) {
-            DataSource ds = createDs(environment, customDs, dsPrefix, Constants.PREFIX_CUSTOM, port);
+            DataSource ds = createDs(environment, dsPrefix, Constants.PREFIX_CUSTOM, port);
             this.customDataSources.put(dsPrefix, ds);
             logger.info("Create custom datasource {}", dsPrefix);
         }
@@ -130,25 +114,21 @@ public class DataSourceConfigRegister implements EnvironmentAware {
         if (!this.appDBConfig.isOtherDs()) {
             return;
         }
-        RelaxedPropertyResolver othersDs =
-                new RelaxedPropertyResolver(environment, Constants.PREFIX_OTHERS + ".");
-        String others = othersDs.getProperty("names");
-        String port = othersDs.getProperty("port");
+        String others = environment.getProperty(Constants.PREFIX_OTHERS + ".names");
+        String port = environment.getProperty(Constants.PREFIX_OTHERS + ".port");
         for (String dsPrefix : others.split(",")) {
-            DataSource ds = createDs(environment, othersDs, dsPrefix, Constants.PREFIX_OTHERS, port);
+            DataSource ds = createDs(environment, dsPrefix, Constants.PREFIX_OTHERS, port);
             this.othersDataSources.put(dsPrefix, ds);
             logger.info("Create other datasource {}", dsPrefix);
         }
     }
 
-    private DataSource createDs(Environment environment, RelaxedPropertyResolver rpr,
-                                String dsPrefix, String flag, String port) {
-        Map<String, Object> dsMap = rpr.getSubProperties(dsPrefix + ".");
-        DataSource ds = this.buildDataSource(
-                new CustomDBConfig(dsMap.get("driverClassName").toString(),
-                        dsMap.get("url").toString().replace(flag + ".port", port),
-                        dsMap.get("username").toString(),
-                        dsMap.get("password").toString()));
+    private DataSource createDs(Environment environment, String dsPrefix, String flag, String port) {
+        Binder binder = Binder.get(environment);
+        CustomDBConfig customDBConfig = new CustomDBConfig();
+        customDBConfig = binder.bind(flag + "." + dsPrefix, customDBConfig.getClass()).get();
+        customDBConfig.setUrl(customDBConfig.getUrl().replace(flag + ".port", port));
+        DataSource ds = this.buildDataSource(customDBConfig);
         this.setDatabaseCommonConfig(ds, environment);
         try {
             ds.getConnection();
@@ -202,22 +182,6 @@ public class DataSourceConfigRegister implements EnvironmentAware {
     @Component
     @ConfigurationProperties(prefix = Constants.PREFIX_MASTER)
     static class MasterDBConfig extends BaseDBConfig {
-    }
-
-    class CustomDBConfig extends BaseDBConfig {
-        private boolean other;
-
-        public boolean isOther() {
-            return other;
-        }
-
-        public void setOther(boolean other) {
-            this.other = other;
-        }
-
-        public CustomDBConfig(String driverClassName, String url, String username, String password) {
-            super(driverClassName, url, username, password);
-        }
     }
 
     public Map<Object, Object> getTargetDataSources() {
