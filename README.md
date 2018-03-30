@@ -4,8 +4,9 @@
 
 ## MySQL/MariaDB
 ### 本地配置
-* 默认端口3306 
-* schema lihe
+* IP:10.122.2.165
+* 默认端口:3306 
+* schema:lihe
 * 应用账户:lihe_app  密码:lihe_app
 * 开发者账户:lihe_dev  密码:lihe_dev
 
