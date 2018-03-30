@@ -23,7 +23,7 @@ public class SecurityTest {
     @Autowired
     private SecurityUtils securityUtils;
 
-//    @Ignore
+    @Ignore
     @Test
     public void generateEncryptPassword() {
         String text = "1412";
