@@ -33,21 +33,24 @@ project.ext {
     env = System.getProperty('env', 'local')
 }
 
+ext {
+    skipPackage = System.getProperty('skip', 'no')
+    testPackage = System.getProperty('retain', 'no')
+    environmentPah = "envs/$env"
+}
+
 buildscript {
+    ext {
+        springBootPlugin = '2.0.0.RELEASE'
+    }
     repositories {
         mavenLocal()
         maven{url 'http://maven.aliyun.com/nexus/content/groups/public'}
     }
 
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.0.0.RELEASE")
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootPlugin")
     }
-}
-
-ext {
-    skipPackage = System.getProperty('skip', 'no')
-    testPackage = System.getProperty('retain', 'no')
-    environmentPah = "envs/$env"
 }
 
 allprojects {
@@ -62,6 +65,7 @@ allprojects {
     apply plugin: 'eclipse'
     apply plugin: 'checkstyle'
     apply plugin: 'jacoco'
+    apply plugin: 'io.spring.dependency-management'
 
     tasks.withType(JavaCompile) {
         sourceCompatibility = 1.8

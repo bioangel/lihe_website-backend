@@ -1,3 +1,5 @@
+apply plugin: 'org.springframework.boot'
+
 dependencies {
     testCompile group: 'junit', name: 'junit', version: junitVersion
     testCompile(group: 'org.assertj', name: 'assertj-core', version: assertjVersion)
