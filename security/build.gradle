@@ -7,8 +7,5 @@ dependencies {
             [group: 'org.springframework', name: 'spring-context', version: springVersion],
             [group: 'org.springframework.boot', name: 'spring-boot', version: springBootVersion],
             [group: 'org.jasypt', name: 'jasypt', version: '1.9.2']
-
-
-
     )
 }

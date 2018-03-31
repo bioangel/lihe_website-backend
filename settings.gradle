@@ -7,4 +7,5 @@ include 'captcha'
 include 'cache'
 include 'authority'
 include 'sys'
+include 'web_client'
 

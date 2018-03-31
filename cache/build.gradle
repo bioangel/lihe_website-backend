@@ -10,7 +10,7 @@ dependencies {
 
             [group: 'redis.clients', name: 'jedis', version: '2.9.0'],
             [group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: jacksonVersion],
-            [group: 'com.google.guava', name: 'guava', version: '12.0.1']
+            [group: 'com.google.guava', name: 'guava', version: guavaVersion]
     )
 
     compile project(':common')
