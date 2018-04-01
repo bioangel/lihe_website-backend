@@ -13,11 +13,11 @@
 ## 表结构维护
 * flyway关闭，启动server报错时请在server目录下执行
 ```
-gradle  flywayMigrate -Dport=3307
+gradle  flywayMigrate -Dport=3307 -Dhost=localhost -Dflyway.user=root -Dflyway.password=root
 ```
 或
 ```
-gradle  flywayMigrate
+gradle  flywayMigrate -Dport=3306 -Dhost=10.122.2.165 -Dflyway.user=lihe_dev -Dflyway.password=lihe_dev
 ```
 
 ## 代码质量检查

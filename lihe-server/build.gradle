@@ -33,15 +33,16 @@ ext {
         dbPort = properties.getProperty("datasource.master.port")
     }
     flywayPort = System.getProperty('port', dbPort)
+    flywayHost = System.getProperty('host', 'localhost')
+    flywayUser = System.getProperty('dbusername', 'root')
+    flywayPassword = System.getProperty('dbpassword', 'root')
 }
 
 apply plugin: 'org.flywaydb.flyway'
 
 flyway {
-    url = "jdbc:mysql://localhost:$flywayPort/lihe?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true"
+    url = "jdbc:mysql://$flywayHost:$flywayPort/lihe?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true"
     baselineOnMigrate = true
-    user = "root"
-    password = "root"
     baselineVersion = 0
     outOfOrder = true
 }
