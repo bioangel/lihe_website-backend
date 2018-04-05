@@ -24,3 +24,8 @@ gradle  flywayMigrate -Dport=3306 -Dhost=10.122.2.165 -Dflyway.user=lihe_dev -Df
 ```
 gradle check
 ```
+
+## 依赖检查
+```
+gradle -q xxxxx:dependencies
+```

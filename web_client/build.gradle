@@ -2,7 +2,7 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: junitVersion
 
     compile(
-            [group: 'net.sourceforge.htmlunit', name: 'htmlunit', version: '2.29'],
+            [group: 'net.sourceforge.htmlunit', name: 'htmlunit', version: '2.30'],
             [group: 'com.google.guava', name: 'guava', version: guavaVersion],
 
     )
