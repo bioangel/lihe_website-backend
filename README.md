@@ -28,4 +28,5 @@ gradle check
 ## 依赖检查
 ```
 gradle -q xxxxx:dependencies
+gradle dependencyInsight --dependency xxxxx
 ```

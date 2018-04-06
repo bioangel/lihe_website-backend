@@ -6,4 +6,5 @@ dependencies {
             [group: 'com.google.guava', name: 'guava', version: guavaVersion],
 
     )
+    compile project(':sys')
 }
