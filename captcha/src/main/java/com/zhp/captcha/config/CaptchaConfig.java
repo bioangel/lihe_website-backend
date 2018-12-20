@@ -1,4 +1,4 @@
-package com.lenovo.cgdm.captcha.config;
+package com.zhp.captcha.config;
 
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
