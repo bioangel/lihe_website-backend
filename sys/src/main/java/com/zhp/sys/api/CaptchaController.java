@@ -27,7 +27,7 @@ public class CaptchaController {
     @Autowired
     private ExternalCache externalCache;
 
-    @SystemLog(action = "CAPTCHA", group = "CAPTCHA")
+//    @SystemLog(action = "CAPTCHA", group = "CAPTCHA")
     @RequestMapping(method = {RequestMethod.GET}, value = "/captcha")
     public ResponseEntity captcha() throws ServletException, IOException {
         String authToken = CommonUtils.getUuid();
