@@ -3,14 +3,13 @@ package com.lenovo.cgdm.captcha.config;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.google.code.kaptcha.util.Config;
-import com.lenovo.cgdm.captcha.base.CaptchaConstants;
+import com.zhp.captcha.base.CaptchaConstants;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.awt.*;
 import java.util.Properties;
 
 /**
