@@ -59,7 +59,7 @@ public class AccountController {
     @Autowired(required = false)
     private CaptchaConfig captchaSwitchConfig;
 
-    @SystemLog(action = AccessConstants.LOGIN_ACTION, group = "ACCOUNT")
+//    @SystemLog(action = AccessConstants.LOGIN_ACTION, group = "ACCOUNT")
     @RequestMapping(value = "login", method = {RequestMethod.POST})
     public ResponseEntity login(@Valid @RequestBody UserLoginDTO account) {
         checkCaptcha(account);
